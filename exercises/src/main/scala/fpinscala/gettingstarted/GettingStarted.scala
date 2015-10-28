@@ -36,7 +36,17 @@ object MyModule {
 
   // Exercise 1: Write a function to compute the nth fibonacci number
 
-  def fib(n: Int): Int = ???
+  def fib(n: Int): Int = {
+    @annotation.tailrec
+    def go(n: Int, prev: Int, current: Int): Int = {
+      n match {
+        case 0 => prev 
+        case _ => go(n - 1, current, prev + current)
+      }
+    }
+    go(n, 0, 1)
+   
+  }
 
   // This definition and `formatAbs` are very similar..
   private def formatFactorial(n: Int) = {
@@ -118,6 +128,22 @@ object MonomorphicBinarySearch {
 
 }
 
+object TestIsSorted {
+  def main(args: Array[String]): Unit = {
+    val sa1 = List(1, 2, 3, 4, 5)
+    val sa2 = List(10, 12, 67, 89, 101)
+    val isa1 = List(3, 8, 1, 6, 3)
+    val isa2 = List(10,1001,9,12,3,1,1,1,1,1)
+    
+    val sorting = (lt: Int, rt: Int) => lt >= rt
+    
+    println("true = " + PolymorphicFunctions.isSorted(sa1.toArray, sorting))
+    println("true = " + PolymorphicFunctions.isSorted(sa2.toArray, sorting))
+    println("false = " + PolymorphicFunctions.isSorted(isa1.toArray, sorting))
+    println("false = " + PolymorphicFunctions.isSorted(isa2.toArray, sorting))
+  }
+}
+
 object PolymorphicFunctions {
 
   // Here's a polymorphic version of `binarySearch`, parameterized on
@@ -140,7 +166,17 @@ object PolymorphicFunctions {
 
   // Exercise 2: Implement a polymorphic function to check whether
   // an `Array[A]` is sorted
-  def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = ???
+  def isSorted[A](as: Array[A], gt: (A,A) => Boolean): Boolean = {
+    @annotation.tailrec
+    def go(pos: Int, as: Array[A], gt: (A,A) => Boolean, acc: Boolean): Boolean = {
+      if (pos <= 1) { 
+        acc
+      } else { 
+        go(pos - 1, as, gt, acc && gt(as(pos), as(pos-1)))        
+      }
+    }
+    go(as.length - 1, as, gt, true)
+  }  
 
   // Polymorphic functions are often so constrained by their type
   // that they only have one implementation! Here's an example:
