@@ -4,6 +4,8 @@ package fpinscala.gettingstarted
 /* Another comment */
 /** A documentation comment */
 object MyModule {
+ 
+  
   def abs(n: Int): Int =
     if (n < 0) -n
     else n
@@ -13,9 +15,10 @@ object MyModule {
     msg.format(x, abs(x))
   }
 
-  def main(args: Array[String]): Unit =
+  def main(args: Array[String]): Unit = {
     println(formatAbs(-42))
-
+  }
+    
   // A definition of factorial, using a local, tail recursive function
   def factorial(n: Int): Int = {
     @annotation.tailrec
@@ -144,7 +147,7 @@ object TestIsSorted {
   }
 }
 
-object PolymorphicFunctions {
+object PolymorphicFunctions extends App {
 
   // Here's a polymorphic version of `binarySearch`, parameterized on
   // a function for testing whether an `A` is greater than another `A`.
@@ -211,4 +214,5 @@ object PolymorphicFunctions {
 
   def compose[A,B,C](f: B => C, g: A => B): A => C =
     (a: A) => f(g(a))
+            
 }
